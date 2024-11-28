@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DT Generator</title>
+    <link rel="stylesheet" href="style/index.css">
+</head>
+<body>
+    <div class="container">
+        <!--<p>S=</p><input type="text" id="textInput" placeholder="Formel" value="(A+B)*(C+D)">-->
+		<!--<p>S=</p><input type="text" id="textInput" placeholder="Formel" value="(A+B)*C">-->
+		<p>S=</p><input type="text" id="textInput-1" placeholder="Formel" value="(D*!(A+B))">
+        <button class="generateButton" onclick="generate('1')">Generieren</button>
+        <div class="output"><canvas id="canvas-1"></canvas></div>
+    </div>
+
+    <div class="container">
+        <!--<p>S=</p><input type="text" id="textInput" placeholder="Formel" value="(A+B)*(C+D)">-->
+		<!--<p>S=</p><input type="text" id="textInput" placeholder="Formel" value="(A+B)*C">-->
+		<p>S=</p><input type="text" id="textInput-2" placeholder="Formel" value="(!A+B)*(D+A)*(C+E)">
+        <!--<p>S=</p><input type="text" id="textInput-2" placeholder="Formel" value="((A*B)+(C*D))*((C+A)*(D+B))">-->
+        <button class="generateButton" onclick="generate('2')">Generieren</button>
+        <div class="output"><canvas id="canvas-2"></canvas></div>
+    </div>
+
+    <div class="container">
+        <!--<p>S=</p><input type="text" id="textInput-3" placeholder="Formel" value="!(!C*!(!A+!B))">-->
+		<!--<p>S=</p><input type="text" id="textInput-3" placeholder="Formel" value="C*(A+B)">-->
+		<!--<p>S=</p><input type="text" id="textInput-3" placeholder="Formel" value="(!A+B)*((C+A)*(D+B))">-->
+        <!--<p>S=</p><input type="text" id="textInput-3" placeholder="Formel" value="(a+!b)*(!a+b)*(b+c)">-->
+        <!--<p>S=</p><input type="text" id="textInput-3" placeholder="Formel" value="a+((a+!b)*(!a+b)*(b+c))">-->
+        <!--<p>S=</p><input type="text" id="textInput-3" placeholder="Formel" value="((a+!b)*(!a+b)*((b+c)*(a+b)))+a">-->
+        <!--<p>S=</p><input type="text" id="textInput-3" placeholder="Formel" value="((a+!b)*(!a+b)*((b+c)*(a+b))*b*b)+a">-->
+        <p>S=</p><input type="text" id="textInput-3" placeholder="Formel" value="((a+!b)*(!a+(c*b*a))*((b+c)*(a+b))*b*b)+a">
+        <button class="generateButton" onclick="generate('3')">Generieren</button>
+        <div class="output"><canvas id="canvas-3"></canvas></div>
+    </div>
+
+	<script src="generate-canvas.js"></script>
+    <script>
+
+        function generate(id){
+            const textInput = document.getElementById('textInput-'+id);
+            const userInput = textInput.value;
+            generateLogic(userInput, document.getElementById('canvas-'+id), 'S');
+        }
+
+		window.onload = function(){
+            /*var textInput = document.getElementById('textInput-1');
+			var userInput = textInput.value;
+			generateLogic(userInput, document.getElementById('canvas-1'), 'S');
+
+            /*textInput = document.getElementById('textInput-2');
+			userInput = textInput.value;
+			createObjects(userInput, document.getElementById('canvas-2'));*/
+		};
+    </script>
+</body>
+</html>
