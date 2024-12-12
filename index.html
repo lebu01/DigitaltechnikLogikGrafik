@@ -1,60 +1,131 @@
 <!DOCTYPE html>
-<html lang="de">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>DT Generator</title>
-    <link rel="stylesheet" href="style/index.css">
+    <title>Klausur Digitaltechnik</title>
+    <link rel="stylesheet" href="style_index.css">
+    <link rel="icon" type="image/x-icon" href="dhbw-favicon.ico">
+
+    <script src="common.js"></script>
+    <script src="KV/QM.js-master/quinemccluskey.js"></script>
+    <script src="KV/QM.js-master/minterm.js"></script>
+    <script src="KV/QM.js-master/util.js"></script>
+
+    <script src="Logic2Canvas/Logic2Canvas.js"></script>
+    
+    
+    <script src="task1.js"></script>
+    <script src="task2.js"></script>
+    <script src="task3.js"></script>
+    <script src="task4.js"></script>
+    <script src="task5.js"></script>
+    <script src="task6.js"></script>
+    
+    <link rel="stylesheet" href="katex/katex.min.css">
+    <script defer src="katex/katex.min.js"  ></script>
+    <script defer src="katex/contrib/auto-render.min.js"></script>
+    
+    <script type="text/javascript" src="SystematicCyclicCode.js"></script>
+
+    <script>
+      function renderLogicInElement(dom){
+        console.log(dom)
+        document.querySelectorAll('.Logic2Canvas').forEach(function(element) {
+          generateLogic(element.getAttribute("logic"), element, element.getAttribute("solution"))
+        });
+      }
+
+      document.addEventListener("DOMContentLoaded", function() {
+              renderMathInElement(document.body, {
+                delimiters: [
+                    {left: '\\(', right: '\\)', display: false},
+                    {left: '\\[', right: '\\]', display: true}
+                ],
+                throwOnError : false
+              });
+                 
+        fetch('cover.html')
+        .then(response => response.text())
+        .then(text => document.getElementById('cover').innerHTML = text)
+        .then( function(){
+          try {
+              var values = JSON.parse(decodeURI(window.location.hash.slice(1)));
+          } catch {}
+            if (typeof values != "undefined") {
+              if ('seed' in values) var seed = values.seed;
+              else var seed = Date.now();            
+              if ('course' in values) {
+                document.getElementById('course').innerHTML = "<strong style='font-size:26px'>"+values.course+"</strong>"
+                document.getElementById('course').setAttribute("style","border-bottom:None")
+              }
+              if ('solution' in values) var solution=true;
+              else var solution=false 
+              if ('date' in values) var date=values.date
+              else var date="xx.xx.20xx"
+              if ('all' in values) var all=true;
+              else var all=false
+              if ('retry' in values) var exam="Nach-/Wiederholungsklausur";
+              else var exam="Klausur"
+              
+              if(!solution){
+                var sheet = window.document.styleSheets[0];
+                sheet.insertRule('@media print{ * {filter: grayscale(100%);}}', sheet.cssRules.length);
+                //var currentDate = new Intl.DateTimeFormat('de', { year: 'numeric', month: '2-digit', day: '2-digit'}).format(new Date());
+                if(document.getElementById('date')) document.getElementById('date').textContent =date;
+                if(document.getElementById('exam')) document.getElementById('exam').textContent =exam;
+
+                if(document.getElementById('Anmerkungen'))  document.getElementById('Anmerkungen').textContent=seed
+              } else {
+                document.getElementById('cover').innerHTML = seed
+              }
+              
+              document.getElementById('coverhead').insertBefore(Object.assign(document.createElement('button'),{ className: 'noPrint',onclick : function(){window.print()},textContent:'Drucken' }),document.getElementById('coverhead').firstChild)
+
+              document.getElementById('coverhead').insertBefore(Object.assign(document.createElement('button'),{ className: 'noPrint',onclick : function(){
+                if(solution) location.replace('#{"seed":'+(seed+1)+',"solution":1}')
+                else location.replace('#{"seed":'+(seed+1)+'}')
+                location.reload(false)
+              },textContent:'Nächstes' }),document.getElementById('coverhead').firstChild)
+
+              document.getElementById('coverhead').insertBefore(Object.assign(document.createElement('button'),{ className: 'noPrint',onclick : function(){
+                location.replace('#{"seed":'+(seed)+',"solution":1}')
+                location.reload(false)
+              },textContent:'Lösung' }),document.getElementById('coverhead').firstChild)
+
+              document.getElementById('coverhead').insertBefore(Object.assign(document.createElement('button'),{ className: 'noPrint',onclick : function(){
+                location.replace('#{"seed":'+seed+"}")
+                location.reload(false)
+              },textContent:'Aufgabe' }),document.getElementById('coverhead').firstChild)
+                        
+              document.getElementById('Aufgabe1').innerHTML = task1.generate(new RandNumGen(values.seed),solution,all)
+              document.getElementById('Aufgabe2').innerHTML = task2.generate(new RandNumGen(values.seed+1),solution,all)
+              document.getElementById('Aufgabe3').innerHTML = task3.generate(new RandNumGen(values.seed+2),solution,all)
+              document.getElementById('Aufgabe4').innerHTML = task4.generate(new RandNumGen(values.seed+3),solution,all)
+              document.getElementById('Aufgabe5').innerHTML = task5.generate(new RandNumGen(values.seed+4),solution,all)
+              document.getElementById('Aufgabe6').innerHTML = task6.generate(new RandNumGen(values.seed+5),solution,all)
+              setTimeout(function () {
+                renderMathInElement(document.body)
+                renderLogicInElement(document.body)}
+              , 1000);
+              
+              
+          } else {
+            location.replace('#{"seed":'+Date.now()+"}")
+            location.reload(false)
+          }
+        })
+      })
+    </script>
 </head>
 <body>
-    <div class="container">
-        <!--<p>S=</p><input type="text" id="textInput" placeholder="Formel" value="(A+B)*(C+D)">-->
-		<!--<p>S=</p><input type="text" id="textInput" placeholder="Formel" value="(A+B)*C">-->
-		<p>S=</p><input type="text" id="textInput-1" placeholder="Formel" value="(D*!(A+B))">
-        <button class="generateButton" onclick="generate('1')">Generieren</button>
-        <div class="output"><canvas id="canvas-1"></canvas></div>
-    </div>
-
-    <div class="container">
-        <!--<p>S=</p><input type="text" id="textInput" placeholder="Formel" value="(A+B)*(C+D)">-->
-		<!--<p>S=</p><input type="text" id="textInput" placeholder="Formel" value="(A+B)*C">-->
-		<p>S=</p><input type="text" id="textInput-2" placeholder="Formel" value="(!A+B)*(D+A)*(C+E)">
-        <!--<p>S=</p><input type="text" id="textInput-2" placeholder="Formel" value="((A*B)+(C*D))*((C+A)*(D+B))">-->
-        <button class="generateButton" onclick="generate('2')">Generieren</button>
-        <div class="output"><canvas id="canvas-2"></canvas></div>
-    </div>
-
-    <div class="container">
-        <!--<p>S=</p><input type="text" id="textInput-3" placeholder="Formel" value="!(!C*!(!A+!B))">-->
-		<!--<p>S=</p><input type="text" id="textInput-3" placeholder="Formel" value="C*(A+B)">-->
-		<!--<p>S=</p><input type="text" id="textInput-3" placeholder="Formel" value="(!A+B)*((C+A)*(D+B))">-->
-        <!--<p>S=</p><input type="text" id="textInput-3" placeholder="Formel" value="(a+!b)*(!a+b)*(b+c)">-->
-        <!--<p>S=</p><input type="text" id="textInput-3" placeholder="Formel" value="a+((a+!b)*(!a+b)*(b+c))">-->
-        <!--<p>S=</p><input type="text" id="textInput-3" placeholder="Formel" value="((a+!b)*(!a+b)*((b+c)*(a+b)))+a">-->
-        <!--<p>S=</p><input type="text" id="textInput-3" placeholder="Formel" value="((a+!b)*(!a+b)*((b+c)*(a+b))*b*b)+a">-->
-        <p>S=</p><input type="text" id="textInput-3" placeholder="Formel" value="((a+!b)*(!a+(c*b*a))*((b+c)*(a+b))*b*b)+a">
-        <button class="generateButton" onclick="generate('3')">Generieren</button>
-        <div class="output"><canvas id="canvas-3"></canvas></div>
-    </div>
-
-	<script src="generate-canvas.js"></script>
-    <script>
-
-        function generate(id){
-            const textInput = document.getElementById('textInput-'+id);
-            const userInput = textInput.value;
-            generateLogic(userInput, document.getElementById('canvas-'+id), 'S');
-        }
-
-		window.onload = function(){
-            /*var textInput = document.getElementById('textInput-1');
-			var userInput = textInput.value;
-			generateLogic(userInput, document.getElementById('canvas-1'), 'S');
-
-            /*textInput = document.getElementById('textInput-2');
-			userInput = textInput.value;
-			createObjects(userInput, document.getElementById('canvas-2'));*/
-		};
-    </script>
+    <div id="coverhead" style="position:fixed;"></div>
+    <div id="cover"></div>
+    <div id="Aufgabe1"></div>
+    <div id="Aufgabe2" class="break-page-before"></div>
+    <div id="Aufgabe3" class="break-page-before"></div>
+    <div id="Aufgabe4" class="break-page-before"></div>
+    <div id="Aufgabe5" class="break-page-before"></div>
+    <div id="Aufgabe6" class="break-page-before"></div>
 </body>
 </html>
