@@ -1,0 +1,194 @@
+<?xml version="1.0" encoding="utf-8"?>
+<circuit>
+  <version>2</version>
+  <attributes/>
+  <visualElements>
+    <visualElement>
+      <elementName>In</elementName>
+      <elementAttributes>
+        <entry>
+          <string>Label</string>
+          <string>c</string>
+        </entry>
+      </elementAttributes>
+      <pos x="240" y="0"/>
+    </visualElement>
+    <visualElement>
+      <elementName>In</elementName>
+      <elementAttributes>
+        <entry>
+          <string>Label</string>
+          <string>b</string>
+        </entry>
+      </elementAttributes>
+      <pos x="240" y="100"/>
+    </visualElement>
+    <visualElement>
+      <elementName>In</elementName>
+      <elementAttributes>
+        <entry>
+          <string>Label</string>
+          <string>a</string>
+        </entry>
+      </elementAttributes>
+      <pos x="240" y="180"/>
+    </visualElement>
+    <visualElement>
+      <elementName>Or</elementName>
+      <elementAttributes>
+        <entry>
+          <string>inverterConfig</string>
+          <inverterConfig>
+            <string>In_1</string>
+          </inverterConfig>
+        </entry>
+      </elementAttributes>
+      <pos x="520" y="-20"/>
+    </visualElement>
+    <visualElement>
+      <elementName>Out</elementName>
+      <elementAttributes>
+        <entry>
+          <string>Label</string>
+          <string>z</string>
+        </entry>
+      </elementAttributes>
+      <pos x="600" y="0"/>
+    </visualElement>
+    <visualElement>
+      <elementName>And</elementName>
+      <elementAttributes>
+        <entry>
+          <string>Inputs</string>
+          <int>3</int>
+        </entry>
+      </elementAttributes>
+      <pos x="420" y="120"/>
+    </visualElement>
+    <visualElement>
+      <elementName>Or</elementName>
+      <elementAttributes/>
+      <pos x="300" y="140"/>
+    </visualElement>
+    <visualElement>
+      <elementName>NAnd</elementName>
+      <elementAttributes>
+        <entry>
+          <string>inverterConfig</string>
+          <inverterConfig>
+            <string>In_1</string>
+          </inverterConfig>
+        </entry>
+      </elementAttributes>
+      <pos x="300" y="60"/>
+    </visualElement>
+    <visualElement>
+      <elementName>XNOr</elementName>
+      <elementAttributes/>
+      <pos x="300" y="-40"/>
+    </visualElement>
+  </visualElements>
+  <wires>
+    <wire>
+      <p1 x="360" y="160"/>
+      <p2 x="420" y="160"/>
+    </wire>
+    <wire>
+      <p1 x="240" y="0"/>
+      <p2 x="280" y="0"/>
+    </wire>
+    <wire>
+      <p1 x="580" y="0"/>
+      <p2 x="600" y="0"/>
+    </wire>
+    <wire>
+      <p1 x="280" y="0"/>
+      <p2 x="300" y="0"/>
+    </wire>
+    <wire>
+      <p1 x="380" y="-20"/>
+      <p2 x="500" y="-20"/>
+    </wire>
+    <wire>
+      <p1 x="280" y="20"/>
+      <p2 x="400" y="20"/>
+    </wire>
+    <wire>
+      <p1 x="500" y="20"/>
+      <p2 x="520" y="20"/>
+    </wire>
+    <wire>
+      <p1 x="240" y="100"/>
+      <p2 x="280" y="100"/>
+    </wire>
+    <wire>
+      <p1 x="280" y="100"/>
+      <p2 x="300" y="100"/>
+    </wire>
+    <wire>
+      <p1 x="280" y="180"/>
+      <p2 x="300" y="180"/>
+    </wire>
+    <wire>
+      <p1 x="240" y="180"/>
+      <p2 x="260" y="180"/>
+    </wire>
+    <wire>
+      <p1 x="260" y="-40"/>
+      <p2 x="300" y="-40"/>
+    </wire>
+    <wire>
+      <p1 x="400" y="120"/>
+      <p2 x="420" y="120"/>
+    </wire>
+    <wire>
+      <p1 x="380" y="140"/>
+      <p2 x="420" y="140"/>
+    </wire>
+    <wire>
+      <p1 x="260" y="140"/>
+      <p2 x="300" y="140"/>
+    </wire>
+    <wire>
+      <p1 x="480" y="140"/>
+      <p2 x="500" y="140"/>
+    </wire>
+    <wire>
+      <p1 x="260" y="60"/>
+      <p2 x="280" y="60"/>
+    </wire>
+    <wire>
+      <p1 x="400" y="20"/>
+      <p2 x="400" y="120"/>
+    </wire>
+    <wire>
+      <p1 x="260" y="-40"/>
+      <p2 x="260" y="60"/>
+    </wire>
+    <wire>
+      <p1 x="260" y="140"/>
+      <p2 x="260" y="180"/>
+    </wire>
+    <wire>
+      <p1 x="260" y="60"/>
+      <p2 x="260" y="140"/>
+    </wire>
+    <wire>
+      <p1 x="500" y="20"/>
+      <p2 x="500" y="140"/>
+    </wire>
+    <wire>
+      <p1 x="280" y="0"/>
+      <p2 x="280" y="20"/>
+    </wire>
+    <wire>
+      <p1 x="280" y="100"/>
+      <p2 x="280" y="180"/>
+    </wire>
+    <wire>
+      <p1 x="380" y="80"/>
+      <p2 x="380" y="140"/>
+    </wire>
+  </wires>
+  <measurementOrdering/>
+</circuit>
