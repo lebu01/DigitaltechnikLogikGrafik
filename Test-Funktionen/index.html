@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DT Generator</title>
+    <link rel="stylesheet" href="style/index.css">
+</head>
+<body id="body">
+    <div class="container">
+        <!--<p>S=</p><input type="text" id="textInput" placeholder="Formel" value="(A+B)*(C+D)">-->
+		<!--<p>S=</p><input type="text" id="textInput" placeholder="Formel" value="(A+B)*C">-->
+		<!--<p>S=</p><input type="text" id="textInput-1" placeholder="Formel" value="(D*!(A+B))">-->
+        <!--<p>S=</p><input type="text" id="textInput-1" placeholder="Formel" value="!(!(b*c)*!(a*!b*!c))">-->
+        <!--<p>S=</p><input type="text" id="textInput-1" placeholder="Formel" value="(b*c)*!(a*!b*!c)">-->
+        <!--<p>S=</p><input type="text" id="textInput-1" placeholder="Formel" value="!(!(!(a+!b+!c)+!(!a+c)))">-->
+        <p>S=</p><input type="text" id="textInput-1" placeholder="Formel" value="a+((a+!b)*(!a+b)*((b+c)*(a+b))*b*b)">
+        
+        <button class="generateButton" onclick="generate('1')">Generieren</button>
+        <div class="output"><canvas id="canvas-1"></canvas></div>
+    </div>
+
+    <div class="container">
+        <!--<p>S=</p><input type="text" id="textInput" placeholder="Formel" value="(A+B)*(C+D)">-->
+		<!--<p>S=</p><input type="text" id="textInput" placeholder="Formel" value="(A+B)*C">-->
+		<p>S=</p><input type="text" id="textInput-2" placeholder="Formel" value="(!A+B)*(D+A)*(C+E)">
+        <!--<p>S=</p><input type="text" id="textInput-2" placeholder="Formel" value="((A*B)+(C*D))*((C+A)*(D+B))">-->
+        <button class="generateButton" onclick="generate('2')">Generieren</button>
+        <div class="output"><canvas id="canvas-2"></canvas></div>
+    </div>
+
+    <div class="container">
+        <!--<p>S=</p><input type="text" id="textInput-3" placeholder="Formel" value="!(!C*!(!A+!B))">-->
+		<!--<p>S=</p><input type="text" id="textInput-3" placeholder="Formel" value="C*(A+B)">-->
+		<!--<p>S=</p><input type="text" id="textInput-3" placeholder="Formel" value="(!A+B)*((C+A)*(D+B))">-->
+        <!--<p>S=</p><input type="text" id="textInput-3" placeholder="Formel" value="(a+!b)*(!a+b)*(b+c)">-->
+        <!--<p>S=</p><input type="text" id="textInput-3" placeholder="Formel" value="a+((a+!b)*(!a+b)*(b+c))">-->
+        <!--<p>S=</p><input type="text" id="textInput-3" placeholder="Formel" value="((a+!b)*(!a+b)*((b+c)*(a+b)))+a">-->
+        <!--<p>S=</p><input type="text" id="textInput-3" placeholder="Formel" value="((a+!b)*(!a+b)*((b+c)*(a+b))*b*b)+a">-->
+        <p>S=</p><input type="text" id="textInput-3" placeholder="Formel" value="((a+!b)*(!a+(c*b*a))*((b+c)*(a+b))*b*b)+a">
+        <button class="generateButton" onclick="generate('3')">Generieren</button>
+        <div class="output"><canvas id="canvas-3"></canvas></div>
+    </div>
+
+	<script src="generate-canvas.js"></script>
+    <script>
+
+        var testFunctions = [
+            '!(!(!(a+!b+!c)+!(!a+c)))',
+            '(A*B)+C',
+            'A*B',
+            '((a+!b)*(!a+b)*((b+c)*(a+b))*b*b)+a',
+            'a+((a+!b)*(!a+b)*((b+c)*(a+b))*b*b)',
+            '((a+!b)*(!a+b)*((b+c)*(a+b)))+a',
+            'a+((a+!b)*(!a+b)*((b+c)*(a+b)))',
+            'a+((a+!b)*(!a+b)*(b+c))',
+            '((a+!b)*(!a+b)*(b+c))+a',
+            '(a+!b)*(!a+b)*(b+c)',
+            '(!A+B)*((C+A)*(D+B))',
+            '!(!C*!(!A+!B))',
+            '((A*B)+(C*D))*((C+A)*(D+B))',
+            '!(!(b*c)*!(a*!b*!c))',
+            '(D*!(A+B))',
+            'D*A+C',
+            '!(!(a+!c)+!(!a+b+c))',
+            '!(!(a+b)+!(a+!c)+!(!a+!b+c))',
+            '!(!(b+!c)+!(!b+c)+!(!a+!b))',
+            '!(!(a+!c)+!(b+!c)+!(!a+!b+c))',
+            '!(!(a*!c)+!(b*!c)+!(!a+!b+c))',
+            '!(!(!a*b)*!(a*!b)*!(!b*!c))',
+            '!(!(b+c)+!(!a+b)+!(!a+c))',
+            '!(!(!a*!b*c)*!(a*b))',
+            '!(!(a+b+c)+!(!a+!c)+!(!a+!b))',
+            '!(!(a+b+c)+!(!b+!c))',
+            '!(!(!a*c)*!(!a*b)*!(a*!b*!c))',
+            '!(!(!a*c)*!(a*!c)*!(a*!b))',
+            '!(!(!a*!b*c)*!(b*!c))',
+            '!(!(a+!b+c)+!(!a+!c))',
+            '!(!(!a*!b)*!(!b*!c)*!(a*b*c))',
+            '!(!(!b*!c)*!(!a*b*c)*!(a*!c))',
+            '!(!(a+!b+c)+!(!a+b)+!(!a+!c))',
+            '!(!(!a*c)*!(a*!c)*!(b*!c))',
+            '!(!(!a*!b)*!(!a*!c)*!(a*b*c))',
+            '!(!(!a*!c)*!(a*!b*c)*!(b*!c))',
+            '!(!(b+!c)+!(!b+c)+!(a+!b))',
+            '!(!(a+!b)+!(!a+b+!c)+!(!b+c))',
+            '!(!(a+!b)+!(!a+b)+!(b+!c))',
+            '!(!(a+b+!c)+!(!b+c)+!(!a+!b))',
+            '!(!(!b+c)+!(!a+b+!c))'
+        ];
+
+        function generate(id){
+            
+            const textInput = document.getElementById('textInput-'+id);
+            const userInput = textInput.value;
+            generateLogic(userInput, document.getElementById('canvas-'+id), 'S');
+
+        }
+
+        function autoTest(){
+
+            const offset = 4;
+
+            for(var i = 0; i < testFunctions.length; i++){
+                var t = testFunctions[i];
+
+                var obj = document.createElement('div');
+                obj.setAttribute('class', 'container');
+
+                obj.innerHTML = '<p>S=</p><input type="text" id="textInput-'+(i+offset)+'" placeholder="Formel" value="'+t+'"><div class="output"><canvas id="canvas-'+(i+offset)+'"></canvas></div>';
+
+                document.getElementById('body').appendChild(obj);
+                generateLogic(t, document.getElementById('canvas-'+(i+offset)), 'S');
+            }
+
+        }
+
+		window.onload = function(){
+            /*var textInput = document.getElementById('textInput-1');
+			var userInput = textInput.value;
+			generateLogic(userInput, document.getElementById('canvas-1'), 'S');
+
+            /*textInput = document.getElementById('textInput-2');
+			userInput = textInput.value;
+			createObjects(userInput, document.getElementById('canvas-2'));*/
+
+            autoTest();
+		};
+
+    </script>
+</body>
+</html>
